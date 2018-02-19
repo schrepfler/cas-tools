@@ -1,0 +1,31 @@
+#!/bin/bash -xe
+
+# this script should probably be implemented in sbt, but as a first step:
+
+cd "$(dirname "${BASH_SOURCE[0]}")"
+
+curl="$(cd "$(brew --cellar curl)" && cd "$(ls | tail -n 1)/lib" && pwd)"
+
+if [ "$curl" = "" ]; then
+  echo "* missing curl"
+  exit 1
+fi
+
+version=${1:?usage: build-mac-osx version}
+git checkout "tags/v$version"
+sbt -Xmx2048m -Dbuild.nativeMode=release clean cliNative/test cliNative/package
+
+pkgbase=target/mac
+rm -rf "$pkgbase"
+mkdir -p "$pkgbase/bin" "$pkgbase/lib"
+
+# We bundle curl because the one that ships with macOS doesn't support OpenSSL PEM files
+# but that's what Docker uses.
+
+cp -p "$curl/libcurl.4.dylib" "$pkgbase/lib"
+cp -p cli/native/target/scala-*/cas-tools-out "$pkgbase/bin/cas-tools"
+
+# link to the bundled curl
+install_name_tool -change /usr/lib/libcurl.4.dylib /usr/local/opt/reactive-cli/lib/libcurl.4.dylib "$pkgbase/bin/cas-tools"
+
+( cd "$pkgbase" && zip "reactive-cli-${version}-Mac_OS_X-x86_64.zip" bin/* lib/* )
