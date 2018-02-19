@@ -23,7 +23,7 @@ mkdir -p "$pkgbase/bin" "$pkgbase/lib"
 # but that's what Docker uses.
 
 cp -p "$curl/libcurl.4.dylib" "$pkgbase/lib"
-cp -p cli/native/target/scala-*/cas-tools-out "$pkgbase/bin/cas-tools"
+cp -p target/scala-*/cas-tools-out "$pkgbase/bin/cas-tools"
 
 # link to the bundled curl
 install_name_tool -change /usr/lib/libcurl.4.dylib /usr/local/opt/reactive-cli/lib/libcurl.4.dylib "$pkgbase/bin/cas-tools"
