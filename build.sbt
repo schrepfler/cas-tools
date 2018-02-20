@@ -33,4 +33,22 @@ nativeLinkingOptions := {
     .fold(Seq.empty[String])(_.split(" ").toVector)
 }
 
+Keys.`package` in Compile := {
+  val casToolsOut = (nativeLink in Compile).value
+  val outputDirectory = target.value / "output"
+
+  IO.deleteFilesEmptyDirs(Seq(outputDirectory))
+  IO.createDirectory(outputDirectory / "lib")
+  IO.createDirectory(outputDirectory / "bin")
+
+  IO.copyFile(casToolsOut, outputDirectory / "bin" / "cas-tools")
+  AdditionalIO.setExecutable(outputDirectory / "bin" / "cas-tools")
+
+  (outputDirectory / "cas-tools").setExecutable(true)
+
+  streams.value.log.info(s"Created files in $outputDirectory")
+
+  outputDirectory
+}
+
 enablePlugins(ScalaNativePlugin)
