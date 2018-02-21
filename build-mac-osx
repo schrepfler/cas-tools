@@ -28,4 +28,4 @@ cp -p target/scala-*/cas-tools-out "$pkgbase/bin/cas-tools"
 # link to the bundled curl
 install_name_tool -change /usr/lib/libcurl.4.dylib /usr/local/opt/reactive-cli/lib/libcurl.4.dylib "$pkgbase/bin/cas-tools"
 
-( cd "$pkgbase" && zip "reactive-cli-${version}-Mac_OS_X-x86_64.zip" bin/* lib/* )
+( cd "$pkgbase" && zip "cas-tools-${version}-Mac_OS_X-x86_64.zip" bin/* lib/* )
