@@ -11,8 +11,8 @@ if [ "$curl" = "" ]; then
   exit 1
 fi
 
-version=${1:?usage: build-mac-osx version}
-git checkout "tags/v$version"
+#version=${1:?usage: build-mac-osx version}
+#git checkout "tags/v$version"
 sbt clean cas-tools/package
 
 pkgbase=target/mac
