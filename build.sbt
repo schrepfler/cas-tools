@@ -14,7 +14,7 @@ libraryDependencies := Seq(
   "com.github.alexarchambault" %%% "case-app" % "2.0.0-M3",
   "biz.enef" %%% "slogging" % "0.6.1",
   "com.lihaoyi" %%% "fastparse" % "1.0.0",
-  "com.lihaoyi" %%% "utest" % "0.7.2" % "test"
+  "com.lihaoyi" %%% "utest" % "0.7.3" % "test"
 )
 
 nativeMode := Properties.nativeMode
