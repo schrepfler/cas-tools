@@ -12,7 +12,7 @@ resolvers += Resolver.sonatypeRepo("releases")
 
 libraryDependencies := Seq(
   "com.github.alexarchambault" %%% "case-app" % "2.0.0-M3",
-  "biz.enef" %%% "slogging" % "0.6.1",
+  "biz.enef" %%% "slogging" % "0.6.2",
   "com.lihaoyi" %%% "fastparse" % "2.3.0",
   "com.lihaoyi" %%% "utest" % "0.7.5" % "test"
 )
